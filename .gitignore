@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+dataset/.cache/
+dataset/minimind_dataset/
+models/
+vendor/

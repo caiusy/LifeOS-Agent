@@ -15,6 +15,10 @@
 详细说明见：
 
 - [lifeos_agent/README.md](lifeos_agent/README.md)
+- [lifeos_agent/SELFTEST.md](lifeos_agent/SELFTEST.md)
+- [TRAINING_PLAN.md](TRAINING_PLAN.md)
+- [REMOTE_SETUP.md](REMOTE_SETUP.md)
+- [IMPLEMENTATION.md](IMPLEMENTATION.md)
 
 ## 当前工具
 
@@ -26,6 +30,32 @@
 
 ```bash
 python lifeos_agent/main.py \
+  --minimind_repo /path/to/minimind-master \
+  --tokenizer_path /path/to/minimind-master/model \
   --checkpoint_path /path/to/full_sft_768.pth \
   --prompt "我之前学 SFTDataset 学到哪了？"
+```
+
+## 数据检查
+
+```bash
+python scripts/prepare_lifeos_data.py
+```
+
+## 远程 3090 Ti 快速运行
+
+```bash
+bash scripts/run_remote_3090_demo.sh "我今天应该做什么？"
+```
+
+## 远程最佳权重运行
+
+```bash
+bash scripts/run_remote_lifeos_best.sh "我今天应该做什么？"
+```
+
+## 远程批量验收
+
+```bash
+bash scripts/remote_lifeos_selftest.sh
 ```

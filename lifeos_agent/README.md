@@ -46,6 +46,37 @@ python lifeos_agent/main.py \
   --prompt "我今天应该做什么？"
 ```
 
+### 方式三：直接在你的远程 3090 Ti 上跑 HF 模型
+
+如果你已经把项目同步到：
+
+- `/home/caius/projects/LifeOS-Agent`
+- `/home/caius/models/minimind-3`
+
+可以在本地执行：
+
+```bash
+bash scripts/run_remote_3090_demo.sh "我今天应该做什么？"
+```
+
+### 方式四：直接运行远程最佳 LifeOS 权重
+
+如果你已经完成了远程增量 SFT，并且存在：
+
+- `/home/caius/minimind/out/lifeos_agent_best_768.pth`
+
+可以在本地执行：
+
+```bash
+bash scripts/run_remote_lifeos_best.sh "我今天应该做什么？"
+```
+
+批量跑 4 个验收问题：
+
+```bash
+bash scripts/remote_lifeos_selftest.sh
+```
+
 ## 你会看到的输出
 
 程序会打印：
@@ -63,6 +94,8 @@ python lifeos_agent/main.py \
 
 ```bash
 python lifeos_agent/main.py \
+  --minimind_repo /path/to/minimind-master \
+  --tokenizer_path /path/to/minimind-master/model \
   --checkpoint_path /path/to/full_sft_768.pth \
   --prompt "我之前学 SFTDataset 学到哪了？"
 ```
@@ -76,6 +109,8 @@ python lifeos_agent/main.py \
 
 ```bash
 python lifeos_agent/main.py \
+  --minimind_repo /path/to/minimind-master \
+  --tokenizer_path /path/to/minimind-master/model \
   --checkpoint_path /path/to/full_sft_768.pth \
   --prompt "我今天应该做什么？"
 ```
@@ -89,6 +124,8 @@ python lifeos_agent/main.py \
 
 ```bash
 python lifeos_agent/main.py \
+  --minimind_repo /path/to/minimind-master \
+  --tokenizer_path /path/to/minimind-master/model \
   --checkpoint_path /path/to/full_sft_768.pth \
   --prompt "17.66 涨停价是多少？"
 ```

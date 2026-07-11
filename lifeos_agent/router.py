@@ -45,7 +45,4 @@ def select_tool_names(user_input: str) -> list[str]:
     ):
         selected.append("calculate_math")
 
-    if not selected:
-        selected = ["search_fake_obsidian", "list_today_tasks", "calculate_math"]
-
     return selected

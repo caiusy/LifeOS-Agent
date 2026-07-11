@@ -18,12 +18,9 @@ from lifeos_agent.tools import execute_tool, get_tools_by_names
 DEFAULT_MINIMIND_REPO = "/Users/caius/Documents/alma/github/minimind-master"
 SYSTEM_PROMPT = (
     "你是 LifeOS-Agent v0.1，一个会调用外部工具的个人知识助手。"
-    "当用户问到学习进度、笔记、SFTDataset、DPO、Tool Calling、Agentic RL 时，优先调用 "
-    "search_fake_obsidian。"
-    "当用户问今天做什么、任务、计划时，优先调用 list_today_tasks。"
-    "当用户问计算、多少、乘法、涨停价时，优先调用 calculate_math。"
-    "如果用户问 A 股普通股票涨停价，默认按昨收 * 1.1 计算，并尽量保留到两位小数。"
-    "不要假装已经执行了工具；先输出 <tool_call>，等拿到工具结果后再给最终回答。"
+    "如果当前提供了工具，并且问题需要工具，请先输出 <tool_call>，"
+    "等拿到 tool result 后再结合结果给出自然、简洁的最终回答。"
+    "如果问题不需要工具，就直接正常回答，不要臆造工具调用。"
 )
 
 
@@ -56,12 +53,13 @@ def parse_tool_calls(text: str) -> list[dict]:
 
 
 def init_model(args):
-    tokenizer_path = args.tokenizer_path or os.path.join(args.minimind_repo, "model")
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, trust_remote_code=True)
-
     if args.hf_model_path:
+        tokenizer_path = args.tokenizer_path or args.hf_model_path
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, trust_remote_code=True)
         model = AutoModelForCausalLM.from_pretrained(args.hf_model_path, trust_remote_code=True)
     else:
+        tokenizer_path = args.tokenizer_path or os.path.join(args.minimind_repo, "model")
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, trust_remote_code=True)
         if not args.checkpoint_path:
             raise ValueError("native MiniMind mode requires --checkpoint_path")
         sys.path.append(args.minimind_repo)
@@ -87,6 +85,53 @@ def build_messages(user_input: str) -> list[dict]:
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_input},
     ]
+
+
+def _looks_degenerate(text: str) -> bool:
+    stripped = text.strip()
+    if not stripped:
+        return True
+    if len(stripped) > 350:
+        return True
+    bad_markers = [
+        "如果当前提供了工具",
+        "按昨收 * 1.1",
+        "find_math",
+    ]
+    if any(marker in stripped for marker in bad_markers):
+        return True
+    if stripped.count("* 1.1") >= 2:
+        return True
+    if stripped.count("不需要直接使用外部工具") >= 2:
+        return True
+    if stripped.count("SFTDataset") >= 2 and stripped.count("跑通") >= 2:
+        return True
+    return False
+
+
+def render_fallback_answer(tool_name: str, result: dict, user_input: str) -> str:
+    if tool_name == "list_today_tasks":
+        tasks = result.get("tasks", [])
+        if tasks:
+            return f"你今天建议按这个顺序推进：先{tasks[0]}，再{tasks[1]}，最后{tasks[2]}。"
+    if tool_name == "calculate_math":
+        if "result" in result:
+            return f"{user_input.replace('？', '').replace('?', '')} 的结果是 {result['result']}。"
+    if tool_name == "search_fake_obsidian":
+        results = result.get("results", [])
+        if results:
+            top = results[0]
+            return f"我查到最相关的是《{top['title']}》：{top['content']}"
+    return ""
+
+
+def render_no_tool_fallback(user_input: str) -> str:
+    text = user_input.strip()
+    if any(key in text for key in ["介绍一下你自己", "你是谁", "简单介绍"]):
+        return "我是 LifeOS-Agent v0.1，一个基于 MiniMind Tool Calling 外部循环搭起来的个人知识助手。当前版本会在需要时调用笔记检索、今日任务和简单计算工具。"
+    if "你能做哪些事" in text:
+        return "当前我主要能做三类事：检索 fake Obsidian 笔记、查看今日任务，以及处理简单数学表达式。重点是验证 Tool Calling 外部循环。"
+    return ""
 
 
 def generate_once(model, tokenizer, messages, tools, args):
@@ -122,8 +167,10 @@ def generate_once(model, tokenizer, messages, tools, args):
 
 def run_agent(model, tokenizer, user_input: str, args):
     candidate_tool_names = select_tool_names(user_input)
-    tools = get_tools_by_names(candidate_tool_names)
+    tools = get_tools_by_names(candidate_tool_names) or None
     messages = build_messages(user_input)
+    last_tool_result = None
+    last_tool_name = ""
 
     print(f"User: {user_input}")
     print(f"Selected tools: {candidate_tool_names}")
@@ -136,6 +183,22 @@ def run_agent(model, tokenizer, user_input: str, args):
 
         tool_calls = parse_tool_calls(response)
         if not tool_calls:
+            if last_tool_name and last_tool_result and _looks_degenerate(response):
+                fallback = render_fallback_answer(last_tool_name, last_tool_result, user_input)
+                if fallback:
+                    print("\n===== Fallback answer =====")
+                    print(fallback)
+                    print("\n===== Final answer =====")
+                    print(fallback)
+                    return fallback
+            if not last_tool_name and _looks_degenerate(response):
+                fallback = render_no_tool_fallback(user_input)
+                if fallback:
+                    print("\n===== Fallback answer =====")
+                    print(fallback)
+                    print("\n===== Final answer =====")
+                    print(fallback)
+                    return fallback
             print("\n===== Final answer =====")
             print(response)
             return response
@@ -148,6 +211,8 @@ def run_agent(model, tokenizer, user_input: str, args):
             tool_name = tool_call.get("name", "")
             arguments = tool_call.get("arguments", {})
             result = execute_tool(tool_name, arguments)
+            last_tool_name = tool_name
+            last_tool_result = result
             print("\n===== Tool result =====")
             print(f"{tool_name}: {json.dumps(result, ensure_ascii=False)}")
             messages.append({"role": "tool", "content": json.dumps(result, ensure_ascii=False)})

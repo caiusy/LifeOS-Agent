@@ -151,7 +151,11 @@ def execute_tool(name: str, arguments) -> dict:
         try:
             arguments = json.loads(arguments)
         except Exception:
-            arguments = {}
+            return {"error": "invalid arguments json"}
+    elif arguments is None:
+        arguments = {}
+    elif not isinstance(arguments, dict):
+        return {"error": "arguments must be a JSON object"}
 
     handlers = {
         "calculate_math": calculate_math,
