@@ -39,10 +39,23 @@ def parse_args():
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--top_p", type=float, default=0.9)
     parser.add_argument("--max_turns", type=int, default=3)
+    # 教学模式默认开启：它把 prompt、token 数、生成张量和工具回填过程打印出来。
+    # 需要安静运行时使用 --no_dimensions，例如接入服务端日志时。
+    parser.add_argument(
+        "--no_dimensions",
+        action="store_false",
+        dest="show_dimensions",
+        help="关闭输入/输出维度与 Tool Calling 中间态日志",
+    )
     return parser.parse_args()
 
 
 def parse_tool_calls(text: str) -> list[dict]:
+    """把模型文本中的 XML 包裹 JSON 转为 Python list。
+
+    例：<tool_call>{"name": "calculate_math", ...}</tool_call>
+    解析失败的片段会被忽略，外部循环随后把它当成普通回答处理。
+    """
     calls = []
     for match in re.findall(r"<tool_call>(.*?)</tool_call>", text, re.DOTALL):
         try:
@@ -135,6 +148,13 @@ def render_no_tool_fallback(user_input: str) -> str:
 
 
 def generate_once(model, tokenizer, messages, tools, args):
+    """完成一轮：消息 -> chat template -> token ids -> 模型生成 -> 文本。
+
+    关键维度（batch_size=1 时）：
+      input_ids: [1, input_tokens]
+      generated_ids: [1, input_tokens + new_tokens]
+      response_ids: [1, new_tokens]
+    """
     input_text = tokenizer.apply_chat_template(
         messages,
         tools=tools,
@@ -142,10 +162,15 @@ def generate_once(model, tokenizer, messages, tools, args):
         add_generation_prompt=True,
         open_thinking=False,
     )
-    print("\n===== Prompt / input_text =====")
-    print(input_text)
+    if args.show_dimensions:
+        print("\n===== Prompt / input_text =====")
+        print(f"messages={len(messages)}, tools={len(tools or [])}, chars={len(input_text)}")
+        print(input_text)
 
     inputs = tokenizer(input_text, return_tensors="pt", truncation=True).to(args.device)
+    if args.show_dimensions:
+        ids = inputs["input_ids"]
+        print(f"input_ids.shape={tuple(ids.shape)}, attention_mask.shape={tuple(inputs['attention_mask'].shape)}")
     with torch.no_grad():
         generated_ids = model.generate(
             inputs["input_ids"],
@@ -162,6 +187,8 @@ def generate_once(model, tokenizer, messages, tools, args):
         generated_ids[0][len(inputs["input_ids"][0]):],
         skip_special_tokens=True,
     )
+    if args.show_dimensions:
+        print(f"generated_ids.shape={tuple(generated_ids.shape)}, response_tokens={generated_ids.shape[1] - inputs['input_ids'].shape[1]}")
     return input_text, response
 
 
@@ -174,6 +201,8 @@ def run_agent(model, tokenizer, user_input: str, args):
 
     print(f"User: {user_input}")
     print(f"Selected tools: {candidate_tool_names}")
+    if args.show_dimensions:
+        print(f"candidate_tools={len(candidate_tool_names)}, schema_tools={len(tools or [])}, initial_messages=2")
 
     for turn in range(1, args.max_turns + 1):
         print(f"\n===== Turn {turn} =====")
@@ -206,6 +235,8 @@ def run_agent(model, tokenizer, user_input: str, args):
         print("\n===== Parsed tool_call =====")
         print(json.dumps(tool_calls, ensure_ascii=False, indent=2))
         messages.append({"role": "assistant", "content": response})
+        if args.show_dimensions:
+            print(f"assistant_message_chars={len(response)}, parsed_calls={len(tool_calls)}, messages_after_assistant={len(messages)}")
 
         for tool_call in tool_calls:
             tool_name = tool_call.get("name", "")
@@ -216,6 +247,8 @@ def run_agent(model, tokenizer, user_input: str, args):
             print("\n===== Tool result =====")
             print(f"{tool_name}: {json.dumps(result, ensure_ascii=False)}")
             messages.append({"role": "tool", "content": json.dumps(result, ensure_ascii=False)})
+            if args.show_dimensions:
+                print(f"tool={tool_name}, result_chars={len(messages[-1]['content'])}, messages_after_tool={len(messages)}")
 
     print("\n===== Stop =====")
     print(f"Reached max_turns={args.max_turns} before the model produced a final answer.")

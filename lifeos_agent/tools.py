@@ -85,6 +85,7 @@ _ALLOWED_UNARYOPS = {
 
 
 def get_tools_by_names(names: list[str]) -> list[dict]:
+    """按路由结果筛选 schema，避免每轮把全部工具塞进 prompt。"""
     seen = set()
     selected = []
     for name in names:
@@ -113,6 +114,7 @@ def _eval_ast(node):
 
 
 def safe_calculate(expression: str):
+    """用 AST 白名单计算表达式，不执行任意 Python 代码。"""
     tree = ast.parse(expression, mode="eval")
     result = _eval_ast(tree)
     if isinstance(result, float):
@@ -147,6 +149,11 @@ def search_fake_obsidian(arguments: dict) -> dict:
 
 
 def execute_tool(name: str, arguments) -> dict:
+    """统一工具边界：规范化参数、校验工具名、捕获执行异常。
+
+    训练/推理中 arguments 可能是 dict，也可能是模型输出的 JSON string，
+    因此不能直接把 arguments 传给 handler。
+    """
     if isinstance(arguments, str):
         try:
             arguments = json.loads(arguments)

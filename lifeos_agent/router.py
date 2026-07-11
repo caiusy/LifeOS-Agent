@@ -3,6 +3,11 @@ def _contains_any(text: str, keywords: list[str]) -> bool:
 
 
 def select_tool_names(user_input: str) -> list[str]:
+    """用轻量关键词路由候选工具。
+
+    返回空列表是有意设计：普通聊天不传 tools，让模型走纯对话路径；
+    返回多个工具时，chat template 会把这些候选函数的 schema 一起渲染。
+    """
     text = user_input.lower()
     selected = []
 

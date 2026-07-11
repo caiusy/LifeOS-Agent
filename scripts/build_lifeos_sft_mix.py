@@ -69,6 +69,11 @@ def extract_tool_names(row: dict) -> list[str]:
 
 
 def normalize_row(row: dict) -> dict:
+    """把官方/私有样本统一成 MiniMind SFTDataset 可消费的字符串字段。
+
+    tools 和 tool_calls 是训练时的监督上下文：模型不仅学习最终答案，
+    还学习在给定 schema 下生成正确的函数名和 JSON 参数。
+    """
     normalized = dict(row)
     normalized["conversations"] = [
         normalize_conversation_message(message)
