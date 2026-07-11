@@ -20,6 +20,8 @@
 - [REMOTE_SETUP.md](REMOTE_SETUP.md)
 - [IMPLEMENTATION.md](IMPLEMENTATION.md)
 - [TRAINING_EXPLAINED.md](TRAINING_EXPLAINED.md)
+- [TRAINING_MASTERCLASS.md](TRAINING_MASTERCLASS.md)
+- [FINAL_PROJECT_REPORT.md](FINAL_PROJECT_REPORT.md)
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - [docs/TRAINING_FLOW.md](docs/TRAINING_FLOW.md)
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
@@ -45,6 +47,20 @@ python lifeos_agent/main.py \
 
 ```bash
 python scripts/prepare_lifeos_data.py
+```
+
+## 本地学习演示与自动测试
+
+不加载模型，逐步展示路由、schema、解析、工具执行和 `role=tool` 回填：
+
+```bash
+python scripts/run_learning_demo.py
+```
+
+运行工具链回归测试：
+
+```bash
+python -m unittest discover -s tests -v
 ```
 
 ## 远程 3090 Ti 快速运行

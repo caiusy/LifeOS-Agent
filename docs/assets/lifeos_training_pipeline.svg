@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+  <title id="title">LifeOS-Agent training and inference pipeline</title>
+  <desc id="desc">A diagram showing Pretrain, SFT, DPO, PPO, GRPO and Agent RL feeding a tool-calling runtime.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f1e8"/>
+      <stop offset="1" stop-color="#dce9e1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#17332b" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#31594c"/>
+    </marker>
+  </defs>
+  <rect width="1440" height="620" rx="28" fill="url(#bg)"/>
+  <text x="72" y="70" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#17332b">LifeOS-Agent: training to tool-use runtime</text>
+  <text x="72" y="105" font-family="Arial, sans-serif" font-size="17" fill="#50665f">Each checkpoint is evaluated independently; the final deployment model is chosen by behavior, not stage order.</text>
+
+  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+    <rect x="70" y="165" width="185" height="112" rx="18" fill="#fffaf0" stroke="#bb7d45" stroke-width="2"/>
+    <text x="162" y="207" text-anchor="middle" font-size="24" font-weight="700" fill="#623d21">Pretrain</text>
+    <text x="162" y="240" text-anchor="middle" font-size="15" fill="#73583f">next-token prediction</text>
+
+    <rect x="300" y="165" width="185" height="112" rx="18" fill="#fffaf0" stroke="#bb7d45" stroke-width="2"/>
+    <text x="392" y="207" text-anchor="middle" font-size="24" font-weight="700" fill="#623d21">SFT</text>
+    <text x="392" y="240" text-anchor="middle" font-size="15" fill="#73583f">format + behavior</text>
+
+    <rect x="530" y="165" width="185" height="112" rx="18" fill="#fffaf0" stroke="#bb7d45" stroke-width="2"/>
+    <text x="622" y="207" text-anchor="middle" font-size="24" font-weight="700" fill="#623d21">DPO</text>
+    <text x="622" y="240" text-anchor="middle" font-size="15" fill="#73583f">chosen vs rejected</text>
+
+    <rect x="760" y="145" width="185" height="82" rx="18" fill="#e7f1ec" stroke="#3c7a66" stroke-width="2"/>
+    <text x="852" y="180" text-anchor="middle" font-size="22" font-weight="700" fill="#204b3d">PPO</text>
+    <text x="852" y="205" text-anchor="middle" font-size="14" fill="#41695b">actor + critic</text>
+
+    <rect x="760" y="245" width="185" height="82" rx="18" fill="#e7f1ec" stroke="#3c7a66" stroke-width="2"/>
+    <text x="852" y="280" text-anchor="middle" font-size="22" font-weight="700" fill="#204b3d">GRPO</text>
+    <text x="852" y="305" text-anchor="middle" font-size="14" fill="#41695b">group advantage</text>
+
+    <rect x="990" y="165" width="185" height="112" rx="18" fill="#d8ebe3" stroke="#27664f" stroke-width="2"/>
+    <text x="1082" y="207" text-anchor="middle" font-size="22" font-weight="700" fill="#173f31">Agent RL</text>
+    <text x="1082" y="238" text-anchor="middle" font-size="14" fill="#41695b">multi-turn rollout</text>
+    <text x="1082" y="258" text-anchor="middle" font-size="14" fill="#41695b">delayed reward</text>
+
+    <rect x="1210" y="145" width="165" height="182" rx="18" fill="#183c32"/>
+    <text x="1292" y="188" text-anchor="middle" font-size="22" font-weight="700" fill="#fffaf0">Evaluation</text>
+    <text x="1292" y="222" text-anchor="middle" font-size="14" fill="#cde3da">tool accuracy</text>
+    <text x="1292" y="246" text-anchor="middle" font-size="14" fill="#cde3da">valid JSON</text>
+    <text x="1292" y="270" text-anchor="middle" font-size="14" fill="#cde3da">grounded answer</text>
+    <text x="1292" y="294" text-anchor="middle" font-size="14" fill="#cde3da">chat regression</text>
+  </g>
+
+  <g stroke="#31594c" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M255 221 H292"/>
+    <path d="M485 221 H522"/>
+    <path d="M715 221 H742"/>
+    <path d="M945 186 H982"/>
+    <path d="M945 286 C965 286 970 245 982 240"/>
+    <path d="M1175 221 H1202"/>
+  </g>
+
+  <rect x="70" y="390" width="1305" height="160" rx="22" fill="#ffffff" fill-opacity="0.78" stroke="#89a89d"/>
+  <text x="100" y="430" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#17332b">Runtime loop</text>
+  <g font-family="Arial, sans-serif" font-size="17" fill="#27483d">
+    <text x="100" y="480">User</text>
+    <text x="250" y="480">Router</text>
+    <text x="410" y="480">Chat template</text>
+    <text x="620" y="480">MiniMind</text>
+    <text x="790" y="480">&lt;tool_call&gt;</text>
+    <text x="980" y="480">Executor</text>
+    <text x="1140" y="480">role=tool</text>
+    <text x="1270" y="480">Answer</text>
+  </g>
+  <g stroke="#bb7d45" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M150 475 H230"/>
+    <path d="M310 475 H390"/>
+    <path d="M535 475 H600"/>
+    <path d="M700 475 H770"/>
+    <path d="M900 475 H960"/>
+    <path d="M1060 475 H1120"/>
+    <path d="M1220 475 H1250"/>
+  </g>
+  <text x="720" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#63766f">Tool results return to the message history, then the model generates a grounded second-turn answer.</text>
+</svg>

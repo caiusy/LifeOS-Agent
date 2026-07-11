@@ -21,7 +21,11 @@ OUT='$REMOTE_MINIMIND/out'
 
 while pgrep -f '[t]rain_dpo.py.*lifeos_agent_dpo_v1' >/dev/null; do sleep 60; done
 test -f \"\$OUT/lifeos_agent_dpo_v1_768.pth\"
-while [ ! -f '$REWARD_MODEL/config.json' ]; do sleep 60; done
+while [ ! -f '$REWARD_MODEL/config.json' ] \
+  || [ ! -f '$REWARD_MODEL/model-00001-of-00002.safetensors' ] \
+  || [ ! -f '$REWARD_MODEL/model-00002-of-00002.safetensors' ] \
+  || [ \"\$(stat -c '%s' '$REWARD_MODEL/model-00001-of-00002.safetensors' 2>/dev/null || echo 0)\" -ne 1981392544 ] \
+  || [ \"\$(stat -c '%s' '$REWARD_MODEL/model-00002-of-00002.safetensors' 2>/dev/null || echo 0)\" -ne 1417790344 ]; do sleep 60; done
 
 nohup python train_ppo.py \\
   --data_path /home/caius/datasets/minimind_dataset/rlaif.jsonl \\

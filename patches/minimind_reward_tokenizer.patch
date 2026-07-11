@@ -1,0 +1,40 @@
+diff --git a/trainer/trainer_utils.py b/trainer/trainer_utils.py
+--- a/trainer/trainer_utils.py
++++ b/trainer/trainer_utils.py
+@@ -12,7 +12,7 @@ import torch.distributed as dist
+ from torch.nn.parallel import DistributedDataParallel
+ from torch.utils.data import Sampler
+-from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification
++from transformers import AutoConfig, AutoTokenizer, AutoModel, AutoModelForSequenceClassification
+ from model.model_minimind import MiniMindForCausalLM
+ 
+@@ -159,8 +159,31 @@ class LMForRewardModel:
+ class LMForRewardModel:
+     def __init__(self, model_path, device="cuda", dtype=torch.float16):
+-        self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+-        self.model = AutoModel.from_pretrained(model_path, torch_dtype=dtype, trust_remote_code=True)
++        # InternLM2-Reward ships custom slow/fast tokenizer mappings. With
++        # Transformers 5.x, automatic fast conversion may ignore that remote
++        # mapping and fail even when sentencepiece is installed. The custom
++        # slow path is compatible with both Transformers 4.x and 5.x.
++        self.tokenizer = AutoTokenizer.from_pretrained(
++            model_path,
++            trust_remote_code=True,
++            use_fast=False,
++        )
++        reward_config = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
++        # Transformers 5 normalizes a default RoPE config to
++        # {"rope_type": "default", ...}; InternLM2's Transformers 4.x custom
++        # implementation expects None for the same behavior and otherwise
++        # reads the legacy "type" key. Restore the original model semantics.
++        rope_scaling = getattr(reward_config, "rope_scaling", None)
++        if rope_scaling and rope_scaling.get("rope_type") == "default":
++            reward_config.rope_scaling = None
++        self.model = AutoModel.from_pretrained(
++            model_path,
++            config=reward_config,
++            torch_dtype=dtype,
++            trust_remote_code=True,
++        )
+         self.model = self.model.to(device).eval()
+         self.device = device

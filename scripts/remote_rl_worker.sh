@@ -3,7 +3,10 @@
 # PPO -> GRPO -> Agent RL one at a time on the single RTX 3090 Ti.
 set -euo pipefail
 
-source /home/caius/lead-3d/venv/bin/activate
+# Keep the RL stack isolated from the user's lead-3d environment. Transformers
+# 4.57.6 can read MiniMind's tokenizers-0.22 JSON while retaining the legacy
+# DynamicCache API required by InternLM2-Reward; Transformers 5.x cannot.
+source "${LIFEOS_VENV_ACTIVATE:-/home/caius/minimind/.venv-lifeos/bin/activate}"
 cd /home/caius/minimind/trainer
 
 OUT=/home/caius/minimind/out
@@ -16,9 +19,19 @@ AGENT_DATA=/home/caius/projects/LifeOS-Agent/dataset/minimind_dataset/agent_rl.j
 while pgrep -f '[t]rain_dpo.py.*lifeos_agent_dpo_v1' >/dev/null; do sleep 60; done
 test -f "$OUT/lifeos_agent_dpo_v1_768.pth"
 
-# PPO/GRPO load a separate 1.8B reward model. Waiting for config.json avoids
-# a partial Hugging Face download being mistaken for a usable model directory.
-while [ ! -f "$REWARD_MODEL/config.json" ]; do sleep 60; done
+# PPO/GRPO load a separate 1.8B reward model. Small metadata files arrive
+# before multi-GB shards during rsync, so checking config.json alone has a
+# race: PPO may start against an incomplete model. Require the exact upstream
+# shard sizes before allocating any GPU models.
+REWARD_SHARD_1="$REWARD_MODEL/model-00001-of-00002.safetensors"
+REWARD_SHARD_2="$REWARD_MODEL/model-00002-of-00002.safetensors"
+while [ ! -f "$REWARD_MODEL/config.json" ] \
+  || [ ! -f "$REWARD_SHARD_1" ] \
+  || [ ! -f "$REWARD_SHARD_2" ] \
+  || [ "$(stat -c '%s' "$REWARD_SHARD_1" 2>/dev/null || echo 0)" -ne 1981392544 ] \
+  || [ "$(stat -c '%s' "$REWARD_SHARD_2" 2>/dev/null || echo 0)" -ne 1417790344 ]; do
+  sleep 60
+done
 
 python train_ppo.py \
   --data_path "$RLAIF" \
