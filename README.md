@@ -24,6 +24,7 @@
 - [FINAL_PROJECT_REPORT.md](FINAL_PROJECT_REPORT.md)
 - [DATA_AND_LOSS_ANALYSIS.md](DATA_AND_LOSS_ANALYSIS.md)
 - [MATHEMATICAL_DERIVATIONS.md](MATHEMATICAL_DERIVATIONS.md)
+- [eval/README.md](eval/README.md)
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - [docs/TRAINING_FLOW.md](docs/TRAINING_FLOW.md)
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
@@ -63,6 +64,13 @@ python scripts/run_learning_demo.py
 
 ```bash
 python -m unittest discover -s tests -v
+```
+
+生成并验证固定的 100 条模型能力评测集：
+
+```bash
+python scripts/build_eval_dataset.py
+python scripts/validate_eval_dataset.py
 ```
 
 ## 远程 3090 Ti 快速运行
