@@ -5,3 +5,4 @@ dataset/.cache/
 dataset/minimind_dataset/
 models/
 vendor/
+analysis/logs/

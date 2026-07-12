@@ -6,6 +6,10 @@
 >
 > 项目仓库：<https://github.com/caiusy/LifeOS-Agent>
 
+训练数据长度、张量维度和 loss 的专项统计见 [DATA_AND_LOSS_ANALYSIS.md](DATA_AND_LOSS_ANALYSIS.md)。
+
+从交叉熵梯度、DPO 到 PPO/GRPO/Agent RL 的逐步数学推导见 [MATHEMATICAL_DERIVATIONS.md](MATHEMATICAL_DERIVATIONS.md)。
+
 ## 1. 项目结论
 
 LifeOS-Agent 已经完成一个可运行的 Tool Calling Agent 闭环：用户问题经过轻量路由后，只把相关工具 schema 交给 MiniMind；模型生成 `<tool_call>`；Python 外部程序解析和执行工具；结果以 `role="tool"` 回填；模型在第二轮生成基于工具结果的最终回答。

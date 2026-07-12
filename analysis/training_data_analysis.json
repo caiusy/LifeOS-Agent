@@ -1,0 +1,238 @@
+{
+  "pretrain": {
+    "path": "dataset/minimind_dataset/pretrain_t2t_mini.jsonl",
+    "size_mb": 1183.55,
+    "rows": 1270238,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 2000,
+    "sample_duplicate_rows": 0,
+    "tool_rows": 0,
+    "tool_row_rate": 0.0,
+    "gt_rows": 0,
+    "gt_row_rate": 0.0,
+    "role_counts": {},
+    "sample_sequences": 2000,
+    "char_length": {
+      "min": 28,
+      "mean": 394.61,
+      "p50": 307,
+      "p90": 601,
+      "p95": 1288,
+      "p99": 2121,
+      "max": 5418
+    },
+    "token_length": {
+      "min": 15,
+      "mean": 262.88,
+      "p50": 215,
+      "p90": 416,
+      "p95": 563,
+      "p99": 1467,
+      "max": 2592
+    },
+    "configured_max_length": 512,
+    "estimated_truncation_rate": 0.061
+  },
+  "sft": {
+    "path": "dataset/minimind_dataset/sft_t2t_mini.jsonl",
+    "size_mb": 1658.63,
+    "rows": 905718,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 2000,
+    "sample_duplicate_rows": 9,
+    "tool_rows": 84832,
+    "tool_row_rate": 0.093663,
+    "gt_rows": 0,
+    "gt_row_rate": 0.0,
+    "role_counts": {
+      "user": 1172003,
+      "assistant": 1249691,
+      "system": 84832,
+      "tool": 77784
+    },
+    "sample_sequences": 2000,
+    "char_length": {
+      "min": 39,
+      "mean": 743.14,
+      "p50": 741,
+      "p90": 978,
+      "p95": 1021,
+      "p99": 1383,
+      "max": 4088
+    },
+    "token_length": {
+      "min": 15,
+      "mean": 462.4,
+      "p50": 471,
+      "p90": 676,
+      "p95": 733,
+      "p99": 839,
+      "max": 1376
+    },
+    "configured_max_length": 768,
+    "estimated_truncation_rate": 0.0315
+  },
+  "dpo": {
+    "path": "dataset/minimind_dataset/dpo.jsonl",
+    "size_mb": 51.17,
+    "rows": 17166,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 2000,
+    "sample_duplicate_rows": 0,
+    "tool_rows": 0,
+    "tool_row_rate": 0.0,
+    "gt_rows": 0,
+    "gt_row_rate": 0.0,
+    "role_counts": {
+      "user": 34332,
+      "assistant": 34332
+    },
+    "sample_sequences": 4000,
+    "char_length": {
+      "min": 22,
+      "mean": 1046.85,
+      "p50": 746,
+      "p90": 2445,
+      "p95": 2829,
+      "p99": 3389,
+      "max": 4010
+    },
+    "token_length": {
+      "min": 13,
+      "mean": 453.31,
+      "p50": 431,
+      "p90": 825,
+      "p95": 899,
+      "p99": 1051,
+      "max": 1202
+    },
+    "configured_max_length": 768,
+    "estimated_truncation_rate": 0.14675
+  },
+  "rlaif": {
+    "path": "dataset/minimind_dataset/rlaif.jsonl",
+    "size_mb": 22.65,
+    "rows": 19502,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 2000,
+    "sample_duplicate_rows": 2,
+    "tool_rows": 0,
+    "tool_row_rate": 0.0,
+    "gt_rows": 0,
+    "gt_row_rate": 0.0,
+    "role_counts": {
+      "user": 44664,
+      "assistant": 44690
+    },
+    "sample_sequences": 2000,
+    "char_length": {
+      "min": 51,
+      "mean": 411.47,
+      "p50": 414,
+      "p90": 734,
+      "p95": 823,
+      "p99": 998,
+      "max": 1214
+    },
+    "token_length": {
+      "min": 14,
+      "mean": 284.82,
+      "p50": 301,
+      "p90": 523,
+      "p95": 579,
+      "p99": 694,
+      "max": 734
+    },
+    "configured_max_length": 768,
+    "estimated_truncation_rate": 0.0
+  },
+  "agent_rl": {
+    "path": "dataset/minimind_dataset/agent_rl.jsonl",
+    "size_mb": 78.24,
+    "rows": 39988,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 2000,
+    "sample_duplicate_rows": 14,
+    "tool_rows": 20000,
+    "tool_row_rate": 0.50015,
+    "gt_rows": 20000,
+    "gt_row_rate": 0.50015,
+    "role_counts": {
+      "user": 90505,
+      "assistant": 90519,
+      "system": 20000
+    },
+    "sample_sequences": 2000,
+    "char_length": {
+      "min": 5,
+      "mean": 909.46,
+      "p50": 802,
+      "p90": 1840,
+      "p95": 2067,
+      "p99": 2557,
+      "max": 3164
+    },
+    "token_length": {
+      "min": 4,
+      "mean": 510.83,
+      "p50": 447,
+      "p90": 1001,
+      "p95": 1149,
+      "p99": 1404,
+      "max": 1781
+    },
+    "configured_max_length": 768,
+    "estimated_truncation_rate": 0.2205
+  },
+  "lifeos_seed": {
+    "path": "dataset/lifeos_sft_seed.jsonl",
+    "size_mb": 0.02,
+    "rows": 26,
+    "malformed_json": 0,
+    "missing_required": 0,
+    "empty_text": 0,
+    "sample_rows": 26,
+    "sample_duplicate_rows": 0,
+    "tool_rows": 18,
+    "tool_row_rate": 0.692308,
+    "gt_rows": 0,
+    "gt_row_rate": 0.0,
+    "role_counts": {
+      "system": 26,
+      "user": 26,
+      "assistant": 44,
+      "tool": 18
+    },
+    "sample_sequences": 26,
+    "char_length": {
+      "min": 130,
+      "mean": 266.88,
+      "p50": 201,
+      "p90": 410,
+      "p95": 647,
+      "p99": 692,
+      "max": 692
+    },
+    "token_length": {
+      "min": 89,
+      "mean": 157.54,
+      "p50": 124,
+      "p90": 235,
+      "p95": 339,
+      "p99": 370,
+      "max": 370
+    },
+    "configured_max_length": 768,
+    "estimated_truncation_rate": 0.0
+  }
+}

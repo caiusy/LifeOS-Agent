@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560">
+<rect width="100%" height="100%" rx="24" fill="#f6f1e8"/>
+<text x="60" y="58" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#17332b">Sample token-length distribution</text>
+<text x="60" y="88" font-family="Arial,sans-serif" font-size="15" fill="#586b64">Bar = P95 content tokens; line = configured training maximum. DPO contains chosen and rejected sequences.</text>
+<line x1="110" y1="450" x2="1130" y2="450" stroke="#879890"/>
+<rect x="110" y="288.3" width="105" height="161.7" rx="10" fill="#c76d3b"/>
+<text x="162.5" y="278.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">563</text>
+<text x="162.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">pretrain</text>
+<text x="162.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=512</text>
+<rect x="280" y="239.5" width="105" height="210.5" rx="10" fill="#d99b45"/>
+<text x="332.5" y="229.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">733</text>
+<text x="332.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">sft</text>
+<text x="332.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=768</text>
+<rect x="450" y="191.8" width="105" height="258.2" rx="10" fill="#3f7f6b"/>
+<text x="502.5" y="181.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">899</text>
+<text x="502.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">dpo</text>
+<text x="502.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=768</text>
+<rect x="620" y="283.7" width="105" height="166.3" rx="10" fill="#5b6f92"/>
+<text x="672.5" y="273.7" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">579</text>
+<text x="672.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">rlaif</text>
+<text x="672.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=768</text>
+<rect x="790" y="120.0" width="105" height="330.0" rx="10" fill="#8b6f9c"/>
+<text x="842.5" y="110.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">1149</text>
+<text x="842.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">agent_rl</text>
+<text x="842.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=768</text>
+<rect x="960" y="352.6" width="105" height="97.4" rx="10" fill="#40798c"/>
+<text x="1012.5" y="342.6" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#253f36">339</text>
+<text x="1012.5" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#253f36">lifeos_seed</text>
+<text x="1012.5" y="503" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#687871">max=768</text>
+</svg>
