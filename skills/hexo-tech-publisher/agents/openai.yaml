@@ -1,4 +1,4 @@
 interface:
   display_name: "Hexo 技术文章发布器"
-  short_description: "将技术文档优化、备份并安全发布到 Hexo 博客站点"
-  default_prompt: "使用 $hexo-tech-publisher 将指定文档优化为 Hexo 技术长文，处理公式和配图，构建、备份、发布并验证线上页面。"
+  short_description: "安全渲染公式，并将技术长文备份发布到 Hexo"
+  default_prompt: "使用 $hexo-tech-publisher 将指定文档优化为 Hexo 技术长文，安全处理 MathJax 公式和配图，执行源码、HTML、浏览器 DOM 三层检查，备份、发布并验证线上页面。"

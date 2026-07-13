@@ -1,6 +1,6 @@
 ---
 name: hexo-tech-publisher
-description: Optimize Markdown technical documentation into a polished Hexo long-form article, manage front matter, MathJax, diagrams and static assets, build locally, back up source, deploy safely, and verify the public URL. Use when the user asks to publish or update a technical article on their Hexo blog, especially requests like "发到博客", "整理为 Hexo 文章", "发布并备份", or "把这篇文档做成长文".
+description: Optimize Markdown technical documentation into a polished Hexo long-form article, safely render MathJax formulas, manage diagrams and static assets, build locally, back up source, deploy, and verify the public URL. Use when the user asks to publish or update a Hexo technical article, especially math-heavy posts or requests like "发到博客", "整理为 Hexo 文章", "发布并备份", or "把这篇文档做成长文".
 ---
 
 # Hexo Tech Publisher
@@ -38,9 +38,11 @@ Never claim a hypothetical reward, metric, or generated answer came from a real 
 1. Put static assets under `source/images/<article-slug>/` when `post_asset_folder: false`.
 2. Reference them as `/images/<article-slug>/<file>`.
 3. Inspect an existing math-heavy article before choosing syntax.
-4. For the known Stellar site, set `mathjax: true` and wrap display math in `{% raw %}` / `{% endraw %}` when needed to protect LaTeX from Markdown parsing.
-5. Keep every `{% raw %}` paired and every `$$`/code fence balanced.
-6. Use descriptive image alt text.
+4. For the known Stellar site, set `mathjax: true` and wrap each display block in `{% raw %}` / `{% endraw %}`.
+5. Never put literal `<` or `>` inside inline or display math. Use `\lt`, `\gt`, `\le`, `\ge`, `\langle`, and `\rangle`; Hexo raw tags do not protect the final HTML parser.
+6. Keep every `{% raw %}` paired and every `$$`/code fence balanced.
+7. Read [references/mathjax-safety.md](references/mathjax-safety.md) for formula syntax and the three-layer validation procedure.
+8. Use descriptive image alt text.
 
 ### 4. Back up before deployment
 
@@ -56,7 +58,8 @@ Commit and push article source and assets to the source branch before running de
 Run the bundled checker:
 
 ```bash
-python scripts/check_hexo_article.py \
+CHECKER="${CODEX_HOME:-$HOME/.codex}/skills/hexo-tech-publisher/scripts/check_hexo_article.py"
+python "$CHECKER" \
   --site /path/to/hexo-site \
   --article source/_posts/article.md
 ```
@@ -75,6 +78,17 @@ Confirm the generated HTML contains:
 - Every expected image URL.
 - MathJax when equations are present.
 - The expected permalink.
+
+For every math-heavy article, rerun the checker against generated HTML:
+
+```bash
+python "$CHECKER" \
+  --site /path/to/hexo-site \
+  --article source/_posts/article.md \
+  --html public/year/month/day/slug/index.html
+```
+
+Reject deployment if generated HTML contains `$$=""`, `<p="">`, `y_{<`, raw Hexo tags, or lacks MathJax. When Chrome is available, dump the post-render DOM and pass `--rendered-dom`; require `<mjx-container>` nodes, not merely a MathJax script tag. Visually inspect at least one representative formula.
 
 Do not deploy after a failed build.
 
@@ -103,6 +117,9 @@ The task is complete only when all applicable items pass:
 - Article is written for readers, not copied as an internal report.
 - Front matter parses.
 - Equations and fences are balanced.
+- Math source contains no raw angle brackets and Stellar display blocks are raw-wrapped.
+- Generated HTML has no malformed formula signatures.
+- A browser-rendered DOM contains MathJax containers for math-heavy posts.
 - Assets exist and are generated into `public`.
 - Local Hexo build succeeds.
 - Source and backup are committed before deployment.
