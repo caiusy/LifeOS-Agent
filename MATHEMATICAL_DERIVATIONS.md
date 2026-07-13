@@ -1000,7 +1000,7 @@ $$
 | GRPO group advantage | `vendor/minimind-master/trainer/train_grpo.py` |
 | Agent trajectory reward | `vendor/minimind-master/trainer/train_agent.py` |
 | Tool runtime | `lifeos_agent/main.py`、`tools.py`、`router.py` |
-| 数据统计 | `DATA_AND_LOSS_ANALYSIS.md` |
+| 数据统计与训练全链路 | `docs/TRAINING_METHODS_COMPLETE_GUIDE.md` |
 | 项目结果 | `FINAL_PROJECT_REPORT.md` |
 
 ## 28. 最终认知框架

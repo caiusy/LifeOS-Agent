@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="840" viewBox="0 0 1500 840">
+  <defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2f6f4"/><stop offset="1" stop-color="#f8eee4"/></linearGradient><marker id="a2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3 0 6Z" fill="#365854"/></marker><filter id="s2"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity=".12"/></filter><style>.h{font:700 31px 'PingFang SC',sans-serif;fill:#183c37}.t{font:700 19px 'PingFang SC',sans-serif;fill:#253f3b}.s{font:15px 'PingFang SC',sans-serif;fill:#506762}.box{fill:#fff;stroke:#b7cbc6;stroke-width:2}.arr{stroke:#365854;stroke-width:3;fill:none;marker-end:url(#a2)}</style></defs>
+  <rect width="1500" height="840" fill="url(#bg2)"/><text x="65" y="60" class="h">MiniMind 63.91M：一条 batch 的张量旅行</text>
+  <g filter="url(#s2)"><rect x="65" y="110" width="225" height="120" rx="18" class="box"/><rect x="340" y="110" width="225" height="120" rx="18" class="box"/><rect x="615" y="110" width="225" height="120" rx="18" class="box"/><rect x="890" y="110" width="225" height="120" rx="18" class="box"/><rect x="1165" y="110" width="270" height="120" rx="18" class="box"/></g>
+  <text x="177" y="152" text-anchor="middle" class="t">Token IDs</text><text x="177" y="188" text-anchor="middle" class="s">[B,T]</text>
+  <text x="452" y="152" text-anchor="middle" class="t">Embedding</text><text x="452" y="188" text-anchor="middle" class="s">[B,T,768]</text>
+  <text x="727" y="152" text-anchor="middle" class="t">8× Transformer</text><text x="727" y="188" text-anchor="middle" class="s">[B,T,768]</text>
+  <text x="1002" y="152" text-anchor="middle" class="t">LM Head</text><text x="1002" y="188" text-anchor="middle" class="s">768 → 6400</text>
+  <text x="1300" y="152" text-anchor="middle" class="t">Logits</text><text x="1300" y="188" text-anchor="middle" class="s">[B,T,6400]</text>
+  <path d="M290 170H335M565 170H610M840 170H885M1115 170H1160" class="arr"/>
+  <rect x="140" y="310" width="1220" height="375" rx="28" fill="#173f3a"/>
+  <text x="180" y="355" style="font:700 24px 'PingFang SC';fill:#fff">一层 Grouped-Query Attention（H=768, Nq=8, Nkv=4, Dh=96）</text>
+  <g><rect x="185" y="400" width="250" height="105" rx="16" fill="#f5b971"/><rect x="505" y="400" width="250" height="105" rx="16" fill="#a9d2c4"/><rect x="825" y="400" width="250" height="105" rx="16" fill="#a9d2c4"/><rect x="1145" y="400" width="170" height="105" rx="16" fill="#d5c3e6"/></g>
+  <text x="310" y="440" text-anchor="middle" class="t">Q</text><text x="310" y="475" text-anchor="middle" class="s">[B,8,T,96]</text><text x="630" y="440" text-anchor="middle" class="t">K repeat×2</text><text x="630" y="475" text-anchor="middle" class="s">[B,8,T,96]</text><text x="950" y="440" text-anchor="middle" class="t">V repeat×2</text><text x="950" y="475" text-anchor="middle" class="s">[B,8,T,96]</text><text x="1230" y="440" text-anchor="middle" class="t">QKᵀ</text><text x="1230" y="475" text-anchor="middle" class="s">[B,8,T,T]</text>
+  <path d="M435 452H500M755 452H820M1075 452H1140" class="arr"/>
+  <rect x="460" y="560" width="580" height="80" rx="16" fill="#fff"/><text x="750" y="594" text-anchor="middle" class="t">softmax(QKᵀ/√96 + masks) · V</text><text x="750" y="623" text-anchor="middle" class="s">→ [B,8,T,96] → reshape [B,T,768]</text>
+  <path d="M1230 510V535H1045" class="arr"/>
+  <text x="750" y="755" text-anchor="middle" class="t">SFT、DPO、PPO、GRPO、Agent RL 都共享这条主干；不同的是 logits 后面如何构造学习信号。</text>
+</svg>

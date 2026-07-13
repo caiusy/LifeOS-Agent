@@ -12,23 +12,16 @@
 
 当前实现位于 [lifeos_agent](lifeos_agent/)。
 
-详细说明见：
+## 文档导航
 
-- [lifeos_agent/README.md](lifeos_agent/README.md)
-- [lifeos_agent/SELFTEST.md](lifeos_agent/SELFTEST.md)
-- [TRAINING_PLAN.md](TRAINING_PLAN.md)
-- [REMOTE_SETUP.md](REMOTE_SETUP.md)
-- [IMPLEMENTATION.md](IMPLEMENTATION.md)
-- [TRAINING_EXPLAINED.md](TRAINING_EXPLAINED.md)
-- [TRAINING_MASTERCLASS.md](TRAINING_MASTERCLASS.md)
-- [FINAL_PROJECT_REPORT.md](FINAL_PROJECT_REPORT.md)
-- [DATA_AND_LOSS_ANALYSIS.md](DATA_AND_LOSS_ANALYSIS.md)
-- [MATHEMATICAL_DERIVATIONS.md](MATHEMATICAL_DERIVATIONS.md)
-- [eval/README.md](eval/README.md)
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- [docs/TRAINING_FLOW.md](docs/TRAINING_FLOW.md)
-- [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
-- [docs/ROADMAP.md](docs/ROADMAP.md)
+建议按以下顺序阅读，完整目录见 [docs/README.md](docs/README.md)：
+
+1. [训练全解：SFT、DPO、PPO、GRPO 与 Agent RL](docs/TRAINING_METHODS_COMPLETE_GUIDE.md)
+2. [数学推导附录](MATHEMATICAL_DERIVATIONS.md)
+3. [最终项目报告](FINAL_PROJECT_REPORT.md)
+4. [架构说明](docs/ARCHITECTURE.md)
+5. [用户指南](docs/USER_GUIDE.md)
+6. [评测集说明](eval/README.md)
 
 ## 当前工具
 

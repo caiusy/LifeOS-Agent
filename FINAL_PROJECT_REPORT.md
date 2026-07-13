@@ -6,7 +6,7 @@
 >
 > 项目仓库：<https://github.com/caiusy/LifeOS-Agent>
 
-训练数据长度、张量维度和 loss 的专项统计见 [DATA_AND_LOSS_ANALYSIS.md](DATA_AND_LOSS_ANALYSIS.md)。
+训练数据、张量维度和五类 loss 的完整讲解见 [训练方法全解](docs/TRAINING_METHODS_COMPLETE_GUIDE.md)。
 
 从交叉熵梯度、DPO 到 PPO/GRPO/Agent RL 的逐步数学推导见 [MATHEMATICAL_DERIVATIONS.md](MATHEMATICAL_DERIVATIONS.md)。
 
