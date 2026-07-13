@@ -12,9 +12,9 @@ OUTPUT = ROOT / "build" / "Agent-RL-Multiturn-Tool-Use-Complete-Guide.md"
 FRONT_MATTER = """---
 title: Agent RL 全链路教程：从工具选择、多轮对话到 Reward、Advantage 与 Token Loss
 date: 2026-07-13 23:40:00
-updated: 2026-07-13 23:40:00
+updated: 2026-07-13 23:45:00
 mathjax: true
-description: "以 MiniMind 和 LifeOS-Agent 的真实代码为主线，用一条数学工具调用和四条 rollout，完整解释 schema、router、多轮 observation、张量维度、reward、group advantage、KL、CISPO token loss 与反向传播。"
+description: "以 MiniMind 和 LifeOS-Agent 的真实代码为主线，用 tokenizer 实测的一条 361-token 工具轨迹和四条可复算 rollout，完整解释 schema、router、多轮 observation、张量维度、reward、group advantage、KL、CISPO token loss 与反向传播。"
 categories:
   - AI与大模型
   - Agent
@@ -43,10 +43,21 @@ def wrap_display_math(markdown: str) -> str:
     return pattern.sub(lambda match: "{% raw %}\n" + match.group(1) + "\n{% endraw %}", markdown)
 
 
+def validate_display_math(markdown: str) -> None:
+    """Reject raw angle brackets that browsers can misread as HTML tags."""
+    blocks = re.findall(r"^\$\$\n(.*?)^\$\$$", markdown, re.MULTILINE | re.DOTALL)
+    if markdown.count("$$") != len(blocks) * 2:
+        raise ValueError("unbalanced or inline $$ delimiter")
+    unsafe = [block for block in blocks if "<" in block or ">" in block]
+    if unsafe:
+        raise ValueError("display math contains raw < or >; use \\lt or \\gt for HTML safety")
+
+
 def main() -> None:
     body = SOURCE.read_text(encoding="utf-8")
     body = re.sub(r"^# .+?\n", "", body, count=1)
     body = body.replace("assets/", "/images/lifeos-agent-training/")
+    validate_display_math(body)
     body = wrap_display_math(body)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     article = FRONT_MATTER + body

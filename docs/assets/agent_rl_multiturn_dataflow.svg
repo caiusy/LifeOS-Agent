@@ -17,7 +17,7 @@
   <g filter="url(#sh)"><rect x="90" y="580" width="400" height="180" rx="22" fill="#fff"/><rect x="600" y="580" width="400" height="180" rx="22" fill="#fff"/><rect x="1110" y="580" width="400" height="180" rx="22" fill="#fff"/></g>
   <text x="120" y="622" class="t" style="font-weight:700">6. 动态打包</text><text x="120" y="660" class="s">input_ids [4,T], T ≤ 1600</text><text x="120" y="691" class="s">action mask: prompt/obs/pad = 0</text><text x="120" y="722" class="s">tool_call/final answer = 1</text>
   <text x="630" y="622" class="t" style="font-weight:700">7. 两个模型前向</text><text x="630" y="660" class="s">Policy logps [4,T-1]</text><text x="630" y="691" class="s">Reference logps [4,T-1]</text><text x="630" y="722" class="s">logits [4,T,6400]</text>
-  <text x="1140" y="622" class="t" style="font-weight:700">8. 组内 Advantage</text><text x="1140" y="660" class="s">A = (R-μ)/(σ+ε)</text><text x="1140" y="691" class="s">[+1.482,+0.309,-1.124,-0.668]</text><text x="1140" y="722" class="s">shape [4] → broadcast [4,T-1]</text>
+  <text x="1140" y="622" class="t" style="font-weight:700">8. 组内 Advantage</text><text x="1140" y="660" class="s">A = (R-μ)/(σ+ε)</text><text x="1140" y="691" class="s">[+1.237,-0.412,-1.402,+0.577]</text><text x="1140" y="722" class="s">shape [4] → broadcast [4,T-1]</text>
   <path d="M490 670H595M1000 670H1105" class="arr"/>
   <path d="M800 760V805" class="arr"/>
   <rect x="250" y="820" width="1100" height="170" rx="28" fill="#fff" stroke="#aabfba" stroke-width="2"/>

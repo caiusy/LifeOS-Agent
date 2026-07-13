@@ -37,3 +37,4 @@
 - [训练指标](assets/training_metrics.svg)
 - [训练目标地图](assets/training_objectives_map.svg)
 - [Agent RL 多轮工具数据流](assets/agent_rl_multiturn_dataflow.svg)
+- [Agent RL 单样例端到端 Trace](assets/agent_rl_end_to_end_trace.svg)
