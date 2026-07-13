@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760">
+  <defs><linearGradient id="b3"><stop stop-color="#0b2530"/><stop offset="1" stop-color="#163e47"/></linearGradient><style>.t{font:700 40px sans-serif;fill:#fff8e8}.s{font:400 19px sans-serif;fill:#b9d4d6}.h{font:700 21px sans-serif;fill:#102e35}.w{font:700 19px monospace;fill:#fff}.n{font:400 18px sans-serif;fill:#d5e8e8}</style></defs>
+  <rect width="1440" height="760" fill="url(#b3)"/><text x="80" y="80" class="t">一条多轮轨迹：哪些 token 学习，哪些只提供上下文</text><text x="80" y="118" class="s">教学长度：P=80，R1=38，O=16，R2=9；真实长度必须由 tokenizer 实测</text>
+  <text x="85" y="200" class="n">Token 区域</text>
+  <rect x="250" y="165" width="560" height="72" rx="12" fill="#607d8b"/><rect x="810" y="165" width="266" height="72" rx="12" fill="#e07a4f"/><rect x="1076" y="165" width="112" height="72" rx="12" fill="#62a69a"/><rect x="1188" y="165" width="126" height="72" rx="12" fill="#e4b54b"/>
+  <text x="530" y="209" text-anchor="middle" class="w">Prompt / Schema · 80</text><text x="943" y="209" text-anchor="middle" class="w">Tool Call · 38</text><text x="1132" y="209" text-anchor="middle" class="w">Obs · 16</text><text x="1251" y="209" text-anchor="middle" class="w">Final · 9</text>
+  <text x="85" y="315" class="n">Action mask</text>
+  <rect x="250" y="278" width="560" height="72" rx="12" fill="#263e48" stroke="#607d8b"/><rect x="810" y="278" width="266" height="72" rx="12" fill="#c74f2b"/><rect x="1076" y="278" width="112" height="72" rx="12" fill="#263e48" stroke="#62a69a"/><rect x="1188" y="278" width="126" height="72" rx="12" fill="#c78b18"/>
+  <text x="530" y="322" text-anchor="middle" class="w">0 × 80</text><text x="943" y="322" text-anchor="middle" class="w">1 × 38</text><text x="1132" y="322" text-anchor="middle" class="w">0 × 16</text><text x="1251" y="322" text-anchor="middle" class="w">1 × 9</text>
+  <text x="85" y="430" class="n">作用</text>
+  <text x="530" y="420" text-anchor="middle" class="s">给状态，不承担策略损失</text><text x="943" y="420" text-anchor="middle" class="s">模型行动，计算 loss</text><text x="1132" y="420" text-anchor="middle" class="s">环境观察，不算 loss</text><text x="1251" y="420" text-anchor="middle" class="s">模型行动</text>
+  <rect x="180" y="510" width="1080" height="150" rx="24" fill="#f4ead0"/>
+  <text x="720" y="558" text-anchor="middle" class="h">总长 L = 80 + 38 + 16 + 9 = 143</text>
+  <text x="720" y="600" text-anchor="middle" class="h">有效 action token C = 38 + 9 = 47</text>
+  <text x="720" y="635" text-anchor="middle" style="font:400 17px sans-serif;fill:#486168">Observation 虽不直接算 loss，却通过注意力改变最终回答的 hidden state</text>
+</svg>

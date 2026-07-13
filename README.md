@@ -17,6 +17,7 @@
 建议按以下顺序阅读，完整目录见 [docs/README.md](docs/README.md)：
 
 1. [训练全解：SFT、DPO、PPO、GRPO 与 Agent RL](docs/TRAINING_METHODS_COMPLETE_GUIDE.md)
+2. [Agent RL 全链路教程：工具选择、多轮对话、Reward 与 Token Loss](docs/AGENT_RL_COMPLETE_GUIDE.md)
 2. [数学推导附录](MATHEMATICAL_DERIVATIONS.md)
 3. [最终项目报告](FINAL_PROJECT_REPORT.md)
 4. [架构说明](docs/ARCHITECTURE.md)

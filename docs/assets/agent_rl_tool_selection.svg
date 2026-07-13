@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="920" viewBox="0 0 1440 920">
+  <defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbf7ed"/><stop offset="1" stop-color="#e8f3f1"/></linearGradient><marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#16697a"/></marker><style>.t{font:700 40px sans-serif;fill:#15343b}.s{font:400 19px sans-serif;fill:#486168}.h{font:700 25px sans-serif;fill:#fff}.p{font:400 18px sans-serif;fill:#173b43}.box{fill:#fff;stroke:#a9c7c8;stroke-width:2}.ar{stroke:#16697a;stroke-width:4;fill:none;marker-end:url(#a2)}</style></defs>
+  <rect width="1440" height="920" fill="url(#bg2)"/><text x="80" y="78" class="t">工具选择不是一个动作，而是四层责任</text><text x="80" y="116" class="s">候选集由系统控制，实际调用由模型生成，安全边界由执行器掌握</text>
+  <rect x="80" y="165" width="600" height="70" rx="18" fill="#16697a"/><text x="380" y="210" text-anchor="middle" class="h">推理：LifeOS-Agent 在线路径</text>
+  <rect x="760" y="165" width="600" height="70" rx="18" fill="#b85c38"/><text x="1060" y="210" text-anchor="middle" class="h">训练：MiniMind Agent RL 路径</text>
+  <g class="box"><rect x="110" y="285" width="230" height="110" rx="16"/><rect x="405" y="285" width="230" height="110" rx="16"/><rect x="110" y="485" width="230" height="110" rx="16"/><rect x="405" y="485" width="230" height="110" rx="16"/></g>
+  <text x="225" y="325" text-anchor="middle" class="p">关键词 Router</text><text x="225" y="355" text-anchor="middle" class="p">筛候选名称</text>
+  <text x="520" y="325" text-anchor="middle" class="p">Chat Template</text><text x="520" y="355" text-anchor="middle" class="p">渲染候选 schema</text>
+  <text x="225" y="525" text-anchor="middle" class="p">LLM</text><text x="225" y="555" text-anchor="middle" class="p">选工具/不调用/写参数</text>
+  <text x="520" y="525" text-anchor="middle" class="p">Parser + Executor</text><text x="520" y="555" text-anchor="middle" class="p">校验、执行、回填</text>
+  <path class="ar" d="M340 340H395"/><path class="ar" d="M520 395V475"/><path class="ar" d="M405 540H350"/>
+  <g class="box"><rect x="790" y="285" width="230" height="110" rx="16"/><rect x="1085" y="285" width="230" height="110" rx="16"/><rect x="790" y="485" width="230" height="110" rx="16"/><rect x="1085" y="485" width="230" height="110" rx="16"/></g>
+  <text x="905" y="325" text-anchor="middle" class="p">数据构造者</text><text x="905" y="355" text-anchor="middle" class="p">预先写 system.tools</text>
+  <text x="1200" y="325" text-anchor="middle" class="p">AgentRLDataset</text><text x="1200" y="355" text-anchor="middle" class="p">读取 messages/tools/gt</text>
+  <text x="905" y="525" text-anchor="middle" class="p">Policy LLM</text><text x="905" y="555" text-anchor="middle" class="p">每题采样 G 条轨迹</text>
+  <text x="1200" y="525" text-anchor="middle" class="p">环境 + Reward</text><text x="1200" y="555" text-anchor="middle" class="p">执行并评价完整轨迹</text>
+  <path class="ar" d="M1020 340H1075"/><path class="ar" d="M1200 395V475"/><path class="ar" d="M1085 540H1030"/>
+  <rect x="105" y="685" width="1230" height="150" rx="22" fill="#173b43"/>
+  <text x="720" y="730" text-anchor="middle" class="h">真正训练“选择能力”的数据条件</text>
+  <text x="720" y="772" text-anchor="middle" style="font:400 20px sans-serif;fill:#d9ecea">多候选 + 干扰工具 + 无需工具负样本 + 参数错误样本 + 多轮恢复样本</text>
+  <text x="720" y="807" text-anchor="middle" style="font:400 17px sans-serif;fill:#9fc8c8">每题只给唯一正确工具，主要是在训练“如何使用”，而不是艰难的相对选择</text>
+</svg>

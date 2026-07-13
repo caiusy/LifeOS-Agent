@@ -5,6 +5,7 @@
 ## 学习路线
 
 1. [训练方法全解](TRAINING_METHODS_COMPLETE_GUIDE.md)：主教材，从 JSON 样本、张量维度到 SFT/DPO/PPO/GRPO/Agent RL loss。
+2. [Agent RL 全链路教程](AGENT_RL_COMPLETE_GUIDE.md)：独立进阶教材，用一条工具调用完整推导多轮数据流、张量维度、reward、advantage、KL 与 CISPO token loss。
 2. [数学推导附录](../MATHEMATICAL_DERIVATIONS.md)：Softmax、交叉熵、DPO、Policy Gradient、GAE、PPO 与 GRPO 的详细推导。
 3. [训练流程](TRAINING_FLOW.md)：项目训练流水线和阶段关系。
 4. [最终项目报告](../FINAL_PROJECT_REPORT.md)：本项目做了什么、训练结果和问题总结。
