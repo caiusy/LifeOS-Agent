@@ -391,6 +391,7 @@ tail -f /home/caius/minimind/out/lifeos_agent_rl_v1.log
 | PPO | `lifeos_agent_ppo_v1_768.pth` | 完成：19,502/19,502 |
 | GRPO | `lifeos_agent_grpo_v1_768.pth` | 完成：19,502/19,502 |
 | Agent RL | `lifeos_agent_rl_v1_768.pth` | 完成：39,988/39,988；原生 Tool Calling 验收未通过 |
+| Agent RL 修复实验 | `lifeos_agent_rl_v2_768.pth` | 完成：380/380；合法工具闭环 3/3，未提升 production |
 
 ## 15. 下一阶段
 

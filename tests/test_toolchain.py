@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from lifeos_agent.main import build_messages, parse_tool_calls
+from lifeos_agent.main import _is_grounded_in_tool_result, _looks_degenerate, build_messages, parse_tool_calls
 from lifeos_agent.router import select_tool_names
 from lifeos_agent.tools import execute_tool, get_tools_by_names
 
@@ -81,6 +81,25 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(len(messages), 4)
         self.assertEqual(messages[-1]["role"], "tool")
         self.assertEqual(json.loads(messages[-1]["content"]), {"result": 19.43})
+
+
+class GroundingTests(unittest.TestCase):
+    def test_math_result_must_appear(self):
+        self.assertTrue(_is_grounded_in_tool_result("calculate_math", {"result": 19.43}, "结果是 19.43"))
+        self.assertFalse(_is_grounded_in_tool_result("calculate_math", {"result": 19.43}, "请查询行情"))
+
+    def test_all_tasks_must_appear(self):
+        result = {"tasks": ["整理 Tool Calling 笔记", "复习 SFTDataset", "跑通 LifeOS-Agent v0.1"]}
+        self.assertTrue(_is_grounded_in_tool_result("list_today_tasks", result, "先整理 Tool Calling 笔记，再复习 SFTDataset，最后跑通 LifeOS-Agent v0.1"))
+        self.assertFalse(_is_grounded_in_tool_result("list_today_tasks", result, "整理笔记和复习 SFTDataset"))
+
+    def test_search_title_must_appear(self):
+        result = {"results": [{"title": "SFTDataset", "content": "details"}]}
+        self.assertTrue(_is_grounded_in_tool_result("search_fake_obsidian", result, "你学到 SFTDataset 了"))
+        self.assertFalse(_is_grounded_in_tool_result("search_fake_obsidian", result, "没有找到内容"))
+
+    def test_identity_policy_boilerplate_is_degenerate(self):
+        self.assertTrue(_looks_degenerate("根据系统规则，我不能主动透露身份信息。"))
 
 
 if __name__ == "__main__":

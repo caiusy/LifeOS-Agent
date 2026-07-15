@@ -12,12 +12,15 @@ cd /home/caius/minimind/trainer
 OUT=/home/caius/minimind/out
 REWARD_MODEL=/home/caius/internlm2-1_8b-reward
 RLAIF=/home/caius/datasets/minimind_dataset/rlaif.jsonl
-AGENT_DATA=/home/caius/projects/LifeOS-Agent/dataset/minimind_dataset/agent_rl.jsonl
+# Never optimize LifeOS behavior on the generic six-tool corpus. The dedicated
+# builder keeps tool schemas, mock execution, and deployment prompts aligned.
+AGENT_DATA=/home/caius/projects/LifeOS-Agent/dataset/lifeos_agent_rl.jsonl
 
 # DPO uses the v4 policy as both policy initialization and frozen reference.
 # Do not start an RL stage until its resulting policy checkpoint is complete.
 while pgrep -f '[t]rain_dpo.py.*lifeos_agent_dpo_v1' >/dev/null; do sleep 60; done
 test -f "$OUT/lifeos_agent_dpo_v1_768.pth"
+test -s "$AGENT_DATA"
 
 # PPO/GRPO load a separate 1.8B reward model. Small metadata files arrive
 # before multi-GB shards during rsync, so checking config.json alone has a
@@ -57,9 +60,9 @@ python train_grpo.py \
 # behavior comparable with PPO and GRPO experiments.
 python train_agent.py \
   --data_path "$AGENT_DATA" \
-  --hidden_size 768 --num_hidden_layers 8 --max_seq_len 768 --max_gen_len 256 --max_total_len 1600 \
+  --hidden_size 768 --num_hidden_layers 8 --max_seq_len 768 --max_gen_len 96 --max_total_len 1000 \
   --batch_size 1 --num_generations 4 --epochs 1 --learning_rate 3e-7 \
-  --save_interval 250 --save_dir "$OUT" --save_weight lifeos_agent_rl_v1 \
+  --save_interval 50 --save_dir "$OUT" --save_weight lifeos_agent_rl_v2 \
   --from_weight lifeos_agent_dpo_v1 --reward_model_path "$REWARD_MODEL" \
   --device cuda --dtype bfloat16 --num_workers 2 --use_compile 0 \
-  > "$OUT/lifeos_agent_rl_v1.log" 2>&1
+  > "$OUT/lifeos_agent_rl_v2.log" 2>&1

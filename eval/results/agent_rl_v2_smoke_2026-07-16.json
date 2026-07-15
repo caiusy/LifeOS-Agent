@@ -1,0 +1,28 @@
+{
+  "date": "2026-07-16T00:05:16+08:00",
+  "checkpoint": "/home/caius/minimind/out/lifeos_agent_rl_v2_768.pth",
+  "sha256": "526edec7b15485c40a77479196e0dfc301efae2ea2c364a125ea296b542d8eec",
+  "training": {
+    "rows": 380,
+    "tool_rows": 180,
+    "no_tool_rows": 200,
+    "final_step": "380/380",
+    "final_reward": 2.88,
+    "errors_found": 0
+  },
+  "raw_model": {
+    "valid_tool_calls": "3/3",
+    "tool_execution_loops": "3/3",
+    "grounded_final_answers": "2/3",
+    "false_tool_call_on_chat": false,
+    "thinking_leak": false
+  },
+  "runtime_with_grounding_guard": {
+    "grounded_final_answers": "3/3",
+    "fallback_used_for_today_tasks": true
+  },
+  "promotion": {
+    "promoted": false,
+    "reason": "The recovery corpus is small and the raw task-list answer still omitted one tool result."
+  }
+}

@@ -8,18 +8,19 @@
 - 远程数据目录：`/home/caius/datasets/minimind_dataset`
 - 远程 HF 模型：`/home/caius/models/minimind-3`
 - 远程 PyTorch 权重：`/home/caius/models/minimind-3-pytorch`
-- 虚拟环境：`/home/caius/lead-3d/venv/bin/activate`
+- LifeOS 训练环境：`/home/caius/minimind/.venv-lifeos/bin/activate`
+- Production checkpoint：`/home/caius/minimind/out/lifeos_agent_production_768.pth`
 
 ## 连接远程机器
 
 ```bash
-ssh wsl-dev
+ssh ubuntu-ts
 ```
 
 ## 激活环境
 
 ```bash
-source /home/caius/lead-3d/venv/bin/activate
+source /home/caius/minimind/.venv-lifeos/bin/activate
 ```
 
 ## 检查 CUDA

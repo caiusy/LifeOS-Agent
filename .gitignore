@@ -3,6 +3,7 @@ __pycache__/
 .DS_Store
 dataset/.cache/
 dataset/minimind_dataset/
+dataset/lifeos_agent_rl.jsonl
 models/
 vendor/
 analysis/logs/

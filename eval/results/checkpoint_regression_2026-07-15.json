@@ -1,0 +1,41 @@
+{
+  "date": "2026-07-15",
+  "cases": [
+    "我之前学 SFTDataset 学到哪了？",
+    "我今天应该做什么？",
+    "17.66 涨停价是多少？",
+    "你好，简单介绍一下你自己"
+  ],
+  "checkpoints": {
+    "lifeos_agent_best_768.pth": {
+      "valid_tool_loops": "3/3",
+      "false_tool_call_on_chat": false,
+      "approved_as_production_baseline": true
+    },
+    "lifeos_agent_dpo_v1_768.pth": {
+      "valid_tool_loops": "3/3",
+      "false_tool_call_on_chat": false,
+      "approved_as_production_baseline": false,
+      "note": "Tool Calling survived DPO; some final-answer repetition remains."
+    },
+    "lifeos_agent_rl_v1_768.pth": {
+      "valid_tool_loops": "0/3",
+      "false_tool_call_on_chat": false,
+      "approved_as_production_baseline": false,
+      "note": "Malformed or missing tool calls and reasoning leakage."
+    },
+    "lifeos_agent_rl_v2_768.pth": {
+      "valid_tool_loops": "3/3",
+      "raw_grounded_final_answers": "2/3",
+      "runtime_grounded_final_answers": "3/3",
+      "false_tool_call_on_chat": false,
+      "thinking_leak": false,
+      "approved_as_production_baseline": false,
+      "note": "Reward/tool-call regression repaired; keep as candidate until broader held-out evaluation."
+    }
+  },
+  "regression_stage": "agent_rl_v1",
+  "repair_status": "agent_rl_v2 repaired strict tool-call behavior but was not promoted",
+  "production_target": "/home/caius/minimind/out/lifeos_agent_production_768.pth",
+  "production_resolves_to": "/home/caius/minimind/out/lifeos_agent_best_768.pth"
+}

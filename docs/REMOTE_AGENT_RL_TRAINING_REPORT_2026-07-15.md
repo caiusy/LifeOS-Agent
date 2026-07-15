@@ -422,3 +422,44 @@ Agent RL 逐 token 教材：`docs/AGENT_RL_COMPLETE_GUIDE.md`
 SFT/DPO/PPO/GRPO 对照教材：`docs/TRAINING_METHODS_COMPLETE_GUIDE.md`
 
 本报告只把日志事实写成结论；更细的 Transformer 张量、attention、gather、advantage、KL 和 token loss 推导保留在上述两份教材中，避免同一内容出现多个不一致版本。
+
+## 17. 失败定位与 2026-07-15 修复
+
+相同四条输入的横向测试确定了退化阶段：
+
+| Checkpoint | 三条工具调用 | 普通聊天 | 结论 |
+|---|---:|---|---|
+| `lifeos_agent_best_768.pth` | 3/3 完成闭环 | 无误调用，偶有文本退化 | production 基线 |
+| `lifeos_agent_dpo_v1_768.pth` | 3/3 完成闭环 | 无误调用 | DPO 保留了工具能力 |
+| `lifeos_agent_rl_v1_768.pth` | 0/3 | 思考泄漏 | Agent RL 阶段退化 |
+
+根因是旧 `calculate_rewards()` 的路径漏洞：样本提供 tools 和 GT 时，如果模型没有生成可解析 tool call，代码仍进入普通回答分支，继续获得长度、thinking 和 reward-model 分数；未闭合标签只扣 0.5。结果是“无法执行但语言自然”的输出可能比严格 JSON 得分更高。
+
+已实施：
+
+1. Production 别名固定指向实测通过的 SFT best，不自动提升实验 RL 权重。
+2. tools+GT 却没有调用、标签不平衡、未知工具或非法参数，reward 直接设为 -3。
+3. 无候选 schema 或工具名非法时立即结束 rollout，不再浪费后续两轮生成。
+4. 改用 LifeOS 专属 Agent RL 数据，不再用只有数学、天气等通用工具的旧语料。
+5. 新数据包含 180 条工具轨迹和 200 条无工具负样本，thinking 模式与部署保持关闭。
+6. 新实验输出为 `lifeos_agent_rl_v2`，绝不覆盖 production。
+
+远程 reward guard 实测：
+
+```text
+malformed required call = -3.0
+missing required call   = -3.0
+invalid tool call       = -3.0
+valid LifeOS call       =  3.0
+valid no-tool answer    =  0.5
+```
+
+修复实验 `lifeos_agent_rl_v2_768.pth` 已完成 380/380：三条工具问题全部生成合法 JSON 并完成执行回填，普通聊天无误调用、无 thinking 泄漏。原生最终回答 grounding 为 2/3；加入确定性 grounding guard 后为 3/3。由于数据只有 380 条且任务清单仍依赖一次 fallback，v2 仅保留为候选，不提升 production。
+
+```text
+v2 SHA-256:
+526edec7b15485c40a77479196e0dfc301efae2ea2c364a125ea296b542d8eec
+
+production:
+lifeos_agent_production_768.pth -> lifeos_agent_best_768.pth
+```

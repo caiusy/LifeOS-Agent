@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOTE_HOST="${REMOTE_HOST:-wsl-dev}"
-REMOTE_VENV="${REMOTE_VENV:-/home/caius/lead-3d/venv/bin/activate}"
+REMOTE_HOST="${REMOTE_HOST:-ubuntu-ts}"
+REMOTE_VENV="${REMOTE_VENV:-/home/caius/minimind/.venv-lifeos/bin/activate}"
 REMOTE_PROJECT="${REMOTE_PROJECT:-/home/caius/projects/LifeOS-Agent}"
 REMOTE_MINIMIND="${REMOTE_MINIMIND:-/home/caius/minimind}"
-REMOTE_CHECKPOINT="${REMOTE_CHECKPOINT:-/home/caius/minimind/out/lifeos_agent_best_768.pth}"
+REMOTE_CHECKPOINT="${REMOTE_CHECKPOINT:-/home/caius/minimind/out/lifeos_agent_production_768.pth}"
 
 prompts=(
   "我之前学 SFTDataset 学到哪了？"

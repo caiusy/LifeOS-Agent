@@ -11,10 +11,10 @@ cd /Users/caius/Documents/LifeOS-Agent
 bash scripts/run_remote_lifeos_best.sh "我今天应该做什么？"
 ```
 
-这条命令会连接远程 `wsl-dev`，加载：
+这条命令会连接远程 `ubuntu-ts`，加载 production 别名：
 
 ```text
-/home/caius/minimind/out/lifeos_agent_best_768.pth
+/home/caius/minimind/out/lifeos_agent_production_768.pth
 ```
 
 ## 2. 连续对话
@@ -22,13 +22,13 @@ bash scripts/run_remote_lifeos_best.sh "我今天应该做什么？"
 如果想在远程机器上连续输入：
 
 ```bash
-ssh wsl-dev
-source /home/caius/lead-3d/venv/bin/activate
+ssh ubuntu-ts
+source /home/caius/minimind/.venv-lifeos/bin/activate
 cd /home/caius/projects/LifeOS-Agent
 python lifeos_agent/main.py \
   --minimind_repo /home/caius/minimind \
   --tokenizer_path /home/caius/minimind/model \
-  --checkpoint_path /home/caius/minimind/out/lifeos_agent_best_768.pth
+  --checkpoint_path /home/caius/minimind/out/lifeos_agent_production_768.pth
 ```
 
 看到 `User>` 后就可以输入问题。

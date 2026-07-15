@@ -110,6 +110,8 @@ def _looks_degenerate(text: str) -> bool:
         "如果当前提供了工具",
         "按昨收 * 1.1",
         "find_math",
+        "不能主动透露身份信息",
+        "根据系统规则",
     ]
     if any(marker in stripped for marker in bad_markers):
         return True
@@ -120,6 +122,19 @@ def _looks_degenerate(text: str) -> bool:
     if stripped.count("SFTDataset") >= 2 and stripped.count("跑通") >= 2:
         return True
     return False
+
+
+def _is_grounded_in_tool_result(tool_name: str, result: dict, response: str) -> bool:
+    """Require deterministic tool facts to appear in the model's final answer."""
+    if tool_name == "calculate_math":
+        return "result" in result and str(result["result"]) in response
+    if tool_name == "list_today_tasks":
+        tasks = result.get("tasks", [])
+        return bool(tasks) and all(str(task) in response for task in tasks)
+    if tool_name == "search_fake_obsidian":
+        notes = result.get("results", [])
+        return bool(notes) and str(notes[0].get("title", "")) in response
+    return not result.get("error")
 
 
 def render_fallback_answer(tool_name: str, result: dict, user_input: str) -> str:
@@ -212,7 +227,10 @@ def run_agent(model, tokenizer, user_input: str, args):
 
         tool_calls = parse_tool_calls(response)
         if not tool_calls:
-            if last_tool_name and last_tool_result and _looks_degenerate(response):
+            if last_tool_name and last_tool_result and (
+                _looks_degenerate(response)
+                or not _is_grounded_in_tool_result(last_tool_name, last_tool_result, response)
+            ):
                 fallback = render_fallback_answer(last_tool_name, last_tool_result, user_input)
                 if fallback:
                     print("\n===== Fallback answer =====")
