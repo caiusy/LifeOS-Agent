@@ -6,79 +6,209 @@
     "loss": {
       "first": 0.6259,
       "last": 0.303,
-      "mean": 0.601744,
-      "last_100_mean": 0.601744,
+      "mean": 0.601744186,
+      "last_100_mean": 0.601744186,
       "min": 0.303,
       "max": 0.9189
     },
     "dpo_loss": {
       "first": 0.6259,
       "last": 0.303,
-      "mean": 0.601744,
-      "last_100_mean": 0.601744,
+      "mean": 0.601744186,
+      "last_100_mean": 0.601744186,
       "min": 0.303,
       "max": 0.9189
     },
     "lr": {
       "first": 4e-08,
       "last": 0.0,
-      "mean": 0.0,
-      "last_100_mean": 0.0,
+      "mean": 2.16e-08,
+      "last_100_mean": 2.16e-08,
       "min": 0.0,
       "max": 4e-08
     }
   },
   "ppo": {
-    "points": 1496,
-    "last_step": 1496,
+    "points": 19502,
+    "last_step": 19502,
     "total_steps": 19502,
     "reward": {
       "first": -1.3721,
-      "last": -1.377,
-      "mean": -1.532124,
-      "last_100_mean": -1.431551,
-      "min": -3.75,
-      "max": 1.8115
+      "last": 1.314,
+      "mean": -0.7285158497,
+      "last_100_mean": 0.354967,
+      "min": -4.1289,
+      "max": 3.8906
     },
     "kl_ref": {
       "first": 0.1083,
-      "last": 0.0127,
-      "mean": 0.00629,
-      "last_100_mean": 0.012224,
+      "last": 0.3629,
+      "mean": 0.2651003436,
+      "last_100_mean": 0.342432,
       "min": 0.0001,
-      "max": 0.1083
+      "max": 3.4329
     },
     "approx_kl": {
       "first": 0.1008,
-      "last": 0.0,
-      "mean": 0.000169,
-      "last_100_mean": 0.000107,
+      "last": 0.0001,
+      "mean": 0.0001258794,
+      "last_100_mean": 0.000132,
       "min": 0.0,
       "max": 0.1008
     },
     "clipfrac": {
       "first": 0.2558,
       "last": 0.0,
-      "mean": 0.000188,
+      "mean": 2.83817e-05,
       "last_100_mean": 0.0,
       "min": 0.0,
       "max": 0.2558
     },
     "critic_loss": {
       "first": 0.7153,
-      "last": 0.0326,
-      "mean": 0.187849,
-      "last_100_mean": 0.090302,
-      "min": 0.0041,
-      "max": 2.1406
+      "last": 0.0087,
+      "mean": 0.0536586504,
+      "last_100_mean": 0.023361,
+      "min": 0.0004,
+      "max": 3.0954
     },
     "avg_response_len": {
       "first": 43.0,
-      "last": 29.0,
-      "mean": 141.997995,
-      "last_100_mean": 141.43,
-      "min": 9.0,
+      "last": 138.0,
+      "mean": 123.4162649985,
+      "last_100_mean": 142.58,
+      "min": 4.0,
       "max": 256.0
+    }
+  },
+  "grpo": {
+    "points": 19502,
+    "last_step": 19502,
+    "total_steps": 19502,
+    "reward": {
+      "first": -1.4673,
+      "last": 2.0661,
+      "mean": -0.1037166239,
+      "last_100_mean": 0.08651,
+      "min": -3.3302,
+      "max": 3.3457
+    },
+    "kl_ref": {
+      "first": 0.0005,
+      "last": -0.0982,
+      "mean": -0.0519713414,
+      "last_100_mean": -0.05946,
+      "min": -1.1542,
+      "max": 0.0786
+    },
+    "adv_std": {
+      "first": 1.1545,
+      "last": 1.1543,
+      "mean": 1.1529324736,
+      "last_100_mean": 1.154361,
+      "min": 0.0,
+      "max": 1.1547
+    },
+    "adv_mean": {
+      "first": -0.0,
+      "last": 0.0,
+      "mean": 0.0,
+      "last_100_mean": 0.0,
+      "min": -0.0,
+      "max": -0.0
+    },
+    "actor_loss": {
+      "first": 0.0097,
+      "last": 0.0764,
+      "mean": 0.0212885037,
+      "last_100_mean": 0.000839,
+      "min": -0.5688,
+      "max": 0.5852
+    },
+    "avg_response_len": {
+      "first": 100.25,
+      "last": 202.75,
+      "mean": 188.6731232694,
+      "last_100_mean": 190.0125,
+      "min": 3.0,
+      "max": 256.0
+    },
+    "lr": {
+      "first": 3e-07,
+      "last": 3e-08,
+      "mean": 1.65e-07,
+      "last_100_mean": 3e-08,
+      "min": 3e-08,
+      "max": 3e-07
+    }
+  },
+  "agent_rl": {
+    "points": 39988,
+    "last_step": 39988,
+    "total_steps": 39988,
+    "reward": {
+      "first": -2.5036,
+      "last": 0.3628,
+      "mean": -0.0832137616,
+      "last_100_mean": 0.406803,
+      "min": -3.0,
+      "max": 3.0
+    },
+    "kl": {
+      "first": 0.0009,
+      "last": -0.0877,
+      "mean": -0.1308220991,
+      "last_100_mean": -0.186164,
+      "min": -0.8324,
+      "max": 1.1455
+    },
+    "group_std": {
+      "first": 0.3244,
+      "last": 0.2512,
+      "mean": 0.5533507252,
+      "last_100_mean": 0.644405,
+      "min": 0.0,
+      "max": 2.6039
+    },
+    "adv_std": {
+      "first": 1.1543,
+      "last": 1.1542,
+      "mean": 1.1446261779,
+      "last_100_mean": 1.154363,
+      "min": 0.0,
+      "max": 1.1547
+    },
+    "adv_mean": {
+      "first": -0.0,
+      "last": 0.0,
+      "mean": 0.0,
+      "last_100_mean": 0.0,
+      "min": -0.0,
+      "max": -0.0
+    },
+    "loss": {
+      "first": -0.0052,
+      "last": -0.0115,
+      "mean": -0.0278496199,
+      "last_100_mean": -0.097699,
+      "min": -2.9432,
+      "max": 2.3084
+    },
+    "avg_response_len": {
+      "first": 161.5,
+      "last": 163.5,
+      "mean": 153.2231356907,
+      "last_100_mean": 177.3825,
+      "min": 0.0,
+      "max": 285.0
+    },
+    "lr": {
+      "first": 3e-07,
+      "last": 3e-08,
+      "mean": 1.65e-07,
+      "last_100_mean": 3e-08,
+      "min": 3e-08,
+      "max": 3e-07
     }
   }
 }

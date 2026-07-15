@@ -18,6 +18,7 @@
 
 1. [训练全解：SFT、DPO、PPO、GRPO 与 Agent RL](docs/TRAINING_METHODS_COMPLETE_GUIDE.md)
 2. [Agent RL 全链路教程：工具选择、多轮对话、Reward 与 Token Loss](docs/AGENT_RL_COMPLETE_GUIDE.md)
+3. [2026-07-15 远程训练完成报告与最终验收](docs/REMOTE_AGENT_RL_TRAINING_REPORT_2026-07-15.md)
 2. [数学推导附录](MATHEMATICAL_DERIVATIONS.md)
 3. [最终项目报告](FINAL_PROJECT_REPORT.md)
 4. [架构说明](docs/ARCHITECTURE.md)

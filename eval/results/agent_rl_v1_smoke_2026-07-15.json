@@ -1,0 +1,49 @@
+{
+  "date": "2026-07-15T23:30:00+08:00",
+  "checkpoint": "/home/caius/minimind/out/lifeos_agent_rl_v1_768.pth",
+  "evaluation_mode": "raw model output before fallback",
+  "decoding": {
+    "temperature": 0.2,
+    "top_p": 0.9,
+    "max_new_tokens": 512,
+    "open_thinking": false
+  },
+  "summary": {
+    "cases": 4,
+    "router_correct": 4,
+    "valid_tool_call": 0,
+    "end_to_end_pass": 0,
+    "thinking_leak": 4
+  },
+  "cases": [
+    {
+      "input": "我之前学 SFTDataset 学到哪了？",
+      "selected_tools": ["search_fake_obsidian"],
+      "parsed_tool_calls": 0,
+      "result": "fail",
+      "reason": "model opened <tool_call> but emitted natural-language reasoning instead of JSON and did not close the tag"
+    },
+    {
+      "input": "我今天应该做什么？",
+      "selected_tools": ["list_today_tasks"],
+      "parsed_tool_calls": 0,
+      "result": "fail",
+      "reason": "model opened <tool_call> but emitted natural-language reasoning instead of JSON and did not close the tag"
+    },
+    {
+      "input": "17.66 涨停价是多少？",
+      "selected_tools": ["calculate_math"],
+      "parsed_tool_calls": 0,
+      "result": "fail",
+      "reason": "model did not call calculate_math and did not produce the expected result near 19.43"
+    },
+    {
+      "input": "你好，简单介绍一下你自己",
+      "selected_tools": [],
+      "parsed_tool_calls": 0,
+      "result": "fail",
+      "reason": "no false tool call, but the answer leaked reasoning and did not provide the requested introduction"
+    }
+  ],
+  "conclusion": "Training completed, but this checkpoint is not approved for deployment."
+}

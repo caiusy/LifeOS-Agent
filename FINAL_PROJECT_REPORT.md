@@ -388,13 +388,13 @@ tail -f /home/caius/minimind/out/lifeos_agent_rl_v1.log
 | LifeOS SFT | `lifeos_sft_768.pth` | 完成 |
 | v4 增量 SFT | `lifeos_agent_v4_768.pth` | 完成 |
 | DPO | `lifeos_agent_dpo_v1_768.pth` | 完成 |
-| PPO | `lifeos_agent_ppo_v1_768.pth` | 训练中；已验证 Reward/KL/Critic Loss 日志 |
-| GRPO | `lifeos_agent_grpo_v1_768.pth` | 等待 RL worker 完成 |
-| Agent RL | `lifeos_agent_rl_v1_768.pth` | 等待 RL worker 完成 |
+| PPO | `lifeos_agent_ppo_v1_768.pth` | 完成：19,502/19,502 |
+| GRPO | `lifeos_agent_grpo_v1_768.pth` | 完成：19,502/19,502 |
+| Agent RL | `lifeos_agent_rl_v1_768.pth` | 完成：39,988/39,988；原生 Tool Calling 验收未通过 |
 
 ## 15. 下一阶段
 
-训练完成后的正确动作不是只挑最后一个 checkpoint，而是对 SFT、DPO、PPO、GRPO、Agent RL 使用同一评测集比较：工具选择准确率、JSON 有效率、工具执行成功率、最终答案 grounded 比例、普通聊天误调用率和重复率。特定 reward 上更高的 RL checkpoint 可能牺牲通用聊天能力，因此最终部署模型必须由评测结果决定。
+四阶段训练已在 2026-07-15 完成。最终 Agent RL checkpoint 的训练 reward 后段改善，但四条 LifeOS 原生推理没有形成合法工具调用闭环，因此不能直接部署。完整实测与原因分析见 `docs/REMOTE_AGENT_RL_TRAINING_REPORT_2026-07-15.md`。最终模型仍需对 SFT、DPO、PPO、GRPO、Agent RL 使用同一评测集比较：工具选择准确率、JSON 有效率、工具执行成功率、最终答案 grounded 比例、普通聊天误调用率和重复率。
 
 ## 16. PPO 首轮实测记录
 
