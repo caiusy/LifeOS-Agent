@@ -19,17 +19,19 @@
 1. [训练全解：SFT、DPO、PPO、GRPO 与 Agent RL](docs/TRAINING_METHODS_COMPLETE_GUIDE.md)
 2. [Agent RL 全链路教程：工具选择、多轮对话、Reward 与 Token Loss](docs/AGENT_RL_COMPLETE_GUIDE.md)
 3. [2026-07-15 远程训练完成报告与最终验收](docs/REMOTE_AGENT_RL_TRAINING_REPORT_2026-07-15.md)
-2. [数学推导附录](MATHEMATICAL_DERIVATIONS.md)
-3. [最终项目报告](FINAL_PROJECT_REPORT.md)
-4. [架构说明](docs/ARCHITECTURE.md)
-5. [用户指南](docs/USER_GUIDE.md)
-6. [评测集说明](eval/README.md)
+4. [数学推导附录](MATHEMATICAL_DERIVATIONS.md)
+5. [最终项目报告](FINAL_PROJECT_REPORT.md)
+6. [架构说明](docs/ARCHITECTURE.md)
+7. [用户指南](docs/USER_GUIDE.md)
+8. [评测集说明](eval/README.md)
 
 ## 当前工具
 
 - `calculate_math`
 - `list_today_tasks`
 - `search_fake_obsidian`
+
+运行前可设置 `MINIMIND_REPO=/path/to/minimind-master`；未设置时默认使用 `~/minimind-master`。显式 `--minimind_repo` 参数优先级最高。
 
 ## 运行示例
 
