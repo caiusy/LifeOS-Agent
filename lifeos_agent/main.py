@@ -15,7 +15,7 @@ from lifeos_agent.router import select_tool_names
 from lifeos_agent.tools import execute_tool, get_tools_by_names
 
 
-DEFAULT_MINIMIND_REPO = "/Users/caius/Documents/alma/github/minimind-master"
+DEFAULT_MINIMIND_REPO = os.environ.get("MINIMIND_REPO", str(Path.home() / "minimind-master"))
 SYSTEM_PROMPT = (
     "你是 LifeOS-Agent v0.1，一个会调用外部工具的个人知识助手。"
     "如果当前提供了工具，并且问题需要工具，请先输出 <tool_call>，"
